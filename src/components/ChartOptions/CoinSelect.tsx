@@ -4,7 +4,7 @@ import { OptionsContext } from '@/components/AppProviders'
 
 import Select from '../Select'
 
-const coins = ['BTC - High Vol', 'BTC - Controlled Vol', 'ETH', 'PEPE']
+const coins = ['BTC', 'ETH', 'PEPE']
 
 const CoinSelect = () => {
   const { coin, setCoin } = useContext(OptionsContext)
