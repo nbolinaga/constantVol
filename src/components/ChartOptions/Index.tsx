@@ -1,56 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import CoinSelect from './CoinSelect/Index';
-import DatePicker from './DatePicker/Index';
-import IntervalSelect from './IntervalSelect/Index';
-import SetDays from './SetDays/Index';
-import SetVolatility from './SetVolatility/Index';
+import React, { useContext } from 'react'
 
-const Index = ({
-  coins, onSubmit
-}:
-  {
-    coins: string[],
-    onSubmit: Function
-  }) => {
-  const [coin, setCoin] = useState<string>('ADA');
-  const [interval, setInterval] = useState<string>('Daily');
-  const [start, setStart] = useState<Date>(new Date('2020-01-01'));
-  const [end, setEnd] = useState<Date>(new Date());
-  const [volatility, setVolatility] = useState<number>(0.1);
-  const [days, setDays] = useState<number>(2);
+import { OptionsContext } from '@/components/AppProviders'
 
-  useEffect(() => {
-    // Define the debouncing function
-    const debounceSubmit = setTimeout(() => {
-      const data = {
-        coin,
-        interval,
-        start,
-        end,
-        volatility,
-        days
-      };
-      onSubmit(data);
-    }, 500); // Adjust debounce time as needed
+import Card from '../Card'
+import CaseStudies from './CaseStudies'
+import CoinSelect from './CoinSelect'
+import SetWindow from './SetWindow'
+import ShowCandle from './ShowCandle'
+import SetVolatility from './SetVolatility'
+import SetRollingWindows from './SetRollingWindow'
 
-    // Cleanup function to clear the timeout when any input changes
-    return () => clearTimeout(debounceSubmit);
-  }, [coin, days, end, interval, onSubmit, start, volatility]);
-
+const ChartOptions = ({ prices, guide = false }: { prices: number[][]; guide?: boolean }) => {
+  const { volatility, rollingWindow, studyCase } = useContext(OptionsContext)
+  const pro = true
   return (
-    <div className='absolute top-0 left-0 w-screen h-[10vh] flex justify-between px-20 py-10'>
-      <div className='flex justify-start space-x-4'>
-        <CoinSelect coins={coins} setCoin={setCoin} />
-        <IntervalSelect setInterval={setInterval} />
-        <SetDays days={days} setDays={setDays} />
-        <SetVolatility volatility={volatility} setVolatility={setVolatility} />
-      </div>
-      <h1 className='text-xl font-bold m-3'>The Bear Protocol - Constant Volatility</h1 >
-      <div>
-        <DatePicker startDate={start} endDate={end} setStartDate={setStart} setEndDate={setEnd} />
-      </div>
-    </div>
+    <>
+      {/* DESKTOP */}
+      <Card className="hidden | md:block w-full mb-[2vh] relative">
+        <div className="flex justify-between items-center">
+          <p className="text-greySmoke text-left text-sm">Asset:</p>
+          <CoinSelect />
+        </div>
+        <div className="flex justify-between items-center mt-[1vh]">
+          <p className="text-greySmoke text-left text-sm">Case Studies:</p>
+          <CaseStudies />
+        </div>
+        <div className="flex justify-between items-center mt-[1vh]">
+          <p className="text-greySmoke text-left text-sm">Days:</p>
+          {studyCase == 0 && <SetWindow />}
+          {studyCase == 1 && (
+            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">04/01/2021</p>
+          )}
+          {studyCase == 2 && (
+            <p className="px-[1vw] py-0.5 h-fit w-fit text-sm border  bg-smoke text-greySmoke text-left">10/01/2023</p>
+          )}
+        </div>
+        {pro && (
+          <>
+            <div className="flex justify-between items-center mt-[1vh]">
+              <p className="text-greySmoke text-left text-sm">Volatility:</p>
+              <SetVolatility />
+            </div>
+            <div className="flex justify-between items-center mt-[1vh]">
+              <p className="text-greySmoke text-left text-sm">Rolling Window:</p>
+              <SetRollingWindows />
+            </div>
+          </>
+        )}
+      </Card>
+    </>
   )
 }
 
-export default Index;
+export default ChartOptions

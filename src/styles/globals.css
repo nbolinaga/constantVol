@@ -1,0 +1,75 @@
+@import './_theme.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal, bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+:root {
+  --scrollbar-width: calc(100vw - 100%);
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Montserrat';
+  background-color: var(--color-smoke);
+  color: var(--color-white);
+}
+
+#Navbar {
+  padding-right: calc(100vw - 100%) !important;
+}
+
+main {
+  width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+*:focus {
+  outline: none;
+}
+
+select,
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  appearance: none;
+}
+
+.scroll-offset {
+  scroll-margin-top: 20vh; /* Adjust this value as needed */
+}
